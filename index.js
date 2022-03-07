@@ -23,7 +23,7 @@ app.route("/order").post(async (req, res) => {
   const body = req.body;
   const store = STORES[body.store];
   if (!store) {
-    return res.json({
+    return res.status(500).json({
       error: "Store not found",
     });
   }
