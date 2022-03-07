@@ -10,17 +10,41 @@ app.use(bodyParser.json());
 const PORT = 4000;
 
 app.route("/order").post(async (req, res) => {
-  const order = req.body;
-  const config = {
-    method: "post",
-    url: "https://sukooon57.myshopify.com/admin/api/2021-10/orders.json",
-    data: order,
-    headers: {
-      "X-Shopify-Access-Token": "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",
+  const STORES = {
+    nutritely: {
+      url: "https://nutritely.myshopify.com/admin/api/2022-01/orders.json",
+      token: "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",
+    },
+    sukooon: {
+      url: "https://sukooon57.myshopify.com/admin/api/2021-10/orders.json",
+      token: "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",
     },
   };
-  let response = await axios(config);
-  res.send(response.data);
+  const body = req.body;
+  const store = STORES[body.store];
+  if (!store) {
+    return res.json({
+      error: "Store not found",
+    });
+  }
+  const { url, token } = store;
+  const config = {
+    method: "post",
+    url,
+    data: body,
+    headers: {
+      "X-Shopify-Access-Token": token,
+    },
+  };
+  await axios(config)
+    .then((response) => {
+      return res.json(response.data);
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        error: err.message,
+      });
+    });
 });
 
 app.listen(PORT, function () {
