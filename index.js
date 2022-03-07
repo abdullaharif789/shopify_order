@@ -11,9 +11,6 @@ const PORT = 4000;
 
 app.route("/order").post(async (req, res) => {
   const order = req.body;
-  if (!order) {
-    res.send(response.data);
-  }
   const config = {
     method: "post",
     url: "https://sukooon57.myshopify.com/admin/api/2021-10/orders.json",
