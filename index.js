@@ -19,6 +19,10 @@ app.route("/order").post(async (req, res) => {
       url: "https://sukooon57.myshopify.com/admin/api/2021-10/orders.json",
       token: "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",
     },
+    elaan: {
+      url: "https://arehmancare.myshopify.com/admin/api/2021-10/orders.json",
+      token: "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",
+    },
   };
   const body = req.body;
   const store = STORES[body.store];
