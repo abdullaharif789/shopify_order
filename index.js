@@ -42,9 +42,11 @@ app.route("/order").post(async (req, res) => {
   };
   await axios(config)
     .then((response) => {
+      console.log("Order created successfully...", body);
       return res.json(response.data);
     })
     .catch((err) => {
+      console.log("Order creation error...", body);
       return res.status(500).json({
         error: err.message,
       });
